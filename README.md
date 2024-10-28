@@ -15,4 +15,3 @@ https://pages.awscloud.com/aws-ai-day-innovation-hackathon-anthropic.html
 AWS AI Day: Innovation 해커톤 출품을 목표로 진행합니다.
 
 ~ 11. 15
-
