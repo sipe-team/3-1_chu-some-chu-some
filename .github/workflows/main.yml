@@ -3,7 +3,7 @@ name: Deploy to S3 and Lambda
 
 on:
   push:
-    branches: ["main"]
+    branches: ["develop", "release/*"]
 
 env:
   AWS_REGION_SEOUL: ap-northeast-2
@@ -51,36 +51,36 @@ jobs:
     - name: Compress python code to zip
       run: |
         cd lambda_ai
-        zip -r lambda_ai.zip ./*
-        aws lambda update-function-code --function-name ${{env.FUNCTION_NAME}} --zip-file fileb://lambda_ai.zip
+        zip -r lambda.zip ./*
+        aws lambda update-function-code --function-name ${{env.FUNCTION_NAME}} --zip-file fileb://lambda.zip
   # build_kotlin:
-  #   runs-on: ubuntu-latest
+#   runs-on: ubuntu-latest
 
-  #   steps:
-  #   # 1. 저장소 체크아웃
-  #   - name: Checkout repository
-  #     uses: actions/checkout@v3
+#   steps:
+#   # 1. 저장소 체크아웃
+#   - name: Checkout repository
+#     uses: actions/checkout@v3
 
-  #   # 2. Docker 로그인 (GitHub Packages 사용 시)
-  #   - name: Log in to GitHub Container Registry
-  #     uses: docker/login-action@v2
-  #     with:
-  #       registry: ghcr.io
-  #       username: ${{ github.actor }}
-  #       password: ${{ secrets.GITHUB_TOKEN }}
+#   # 2. Docker 로그인 (GitHub Packages 사용 시)
+#   - name: Log in to GitHub Container Registry
+#     uses: docker/login-action@v2
+#     with:
+#       registry: ghcr.io
+#       username: ${{ github.actor }}
+#       password: ${{ secrets.GITHUB_TOKEN }}
 
-  #   # 3. Docker 이미지 빌드 및 푸시
-  #   - name: Build and push Docker image
-  #     run: |
-  #       docker build -t ghcr.io/${{ github.repository }}/my-app:${{ github.sha }} .
-  #       docker push ghcr.io/${{ github.repository }}/my-app:${{ github.sha }}
+#   # 3. Docker 이미지 빌드 및 푸시
+#   - name: Build and push Docker image
+#     run: |
+#       docker build -t ghcr.io/${{ github.repository }}/my-app:${{ github.sha }} .
+#       docker push ghcr.io/${{ github.repository }}/my-app:${{ github.sha }}
 
-  # deploy_kotlin:
-  #   runs-on: ubuntu-latest
-  #   needs: build_kotlin
-  #   if: github.ref == 'refs/heads/main'
+# deploy_kotlin:
+#   runs-on: ubuntu-latest
+#   needs: build_kotlin
+#   if: github.ref == 'refs/heads/main'
 
-  #   steps:
-  #   - name: Deploy to production
-  #     run: |
-  #       echo "배포 스크립트 추후에 추가예정"
+#   steps:
+#   - name: Deploy to production
+#     run: |
+#       echo "배포 스크립트 추후에 추가예정"

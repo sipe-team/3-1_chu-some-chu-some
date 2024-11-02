@@ -1,6 +1,6 @@
 import json
 from persistant.sqlite_db_manager import save_search_history, fetch_search_history
-
+from service.retrive import retrive
 def lambda_handler(event, context):
     headers = {
                 'Content-Type': 'application/json',
@@ -30,13 +30,15 @@ def lambda_handler(event, context):
             'headers': headers
         }
 
-    if path == '/searchPerson':
-        # 매물검색
+    if path == '/retrive':
+        # 매물 검색 및 추천
         body = json.loads(event['body'])
-
+        
+        response = retrive(body)
+        
         return {
             'statusCode': 200,
-            'body': {"price": price},
+            'body': response,
             'headers': headers
         }
 
